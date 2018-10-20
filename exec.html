@@ -1,0 +1,122 @@
+<!DOCTYPE>
+
+<style>
+       form {   width: 50% ;
+                margin: auto ; 
+                border: 1px solid blue ;
+                border-radius: 10px;
+                padding: 25px; 
+        }
+	   label {
+				width:180px;
+				clear:left;
+				text-align:right;
+				padding-right:10px;
+		}
+
+		input, label {
+				float:left;
+		}
+
+</style>
+<form action="insert.php" onsubmit = "return f()">
+	<div class="center-div">
+		<span id='messageu'></span>
+		<label class="labels" >Enter UCID </label><input type = text name="UCID" id = "UCID" placeholder="required" autocomplete="on" onkeyup='check();' /><br></br>
+		<label class="labels" >Enter Password </label><input type = text name="pass" id = "pass" placeholder="required" autocomplete="on" onkeyup='check();'/> <br></br>
+		<span id='message'></span>
+		<label class="labels" >ReType Password </label><input type = text name="otherpass" id = "otherpass" placeholder="required" autocomplete="on" onkeyup='check();'/><br></br>
+		<label class="labels" >Full Name </label><input type = text name="name" id = "name" placeholder="required" autocomplete="on"> <br></br>
+		<label class="labels" >Initial </label><input type = text name="initial" id = "initial" placeholder="required" autocomplete="on" /><br></br>
+		<label class="labels" >Mail </label><input type = text name="mail" id = "mail" placeholder="required" autocomplete="on" /><br></br>
+		<input type = "checkbox" id="receipt" name="email receipt" value="email"> email receipt<br></br>
+		<label class="labels"><input type=submit value="Create New Account"></label>
+	</div>
+</form>
+<script>
+function f(){
+	var ptr = document.getElementById("UCID");
+	var ucid = ptr.value.trim();
+	if(ucid==""){
+		return false;
+	}else if(document.getElementById("pass").value!==document.getElementById("otherpass").value){
+		return false;
+	}else {return true;}
+}
+var check = function() {
+  if (document.getElementById('pass').value === document.getElementById('otherpass').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  }else{
+	document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = ' not matching';
+  }
+  if (document.getElementById('UCID').value === "") {
+    document.getElementById('messageu').style.color = 'red';
+    document.getElementById('messageu').innerHTML = 'empty';
+  }else{
+	document.getElementById('messageu').style.color = 'green';
+    document.getElementById('messageu').innerHTML = ' valid';
+  }
+}
+</script>
+
+<meta charset="utf-8">
+<form action="withdrawordeposit.php" onsubmit = "return fio()">
+	<div class="center-div">
+		<span id='messagel'></span>
+		<label class="labels" >Enter UCID </label><input type=text name="UCID2" id="UCID2" placeholder="required" autocomplete="on" onkeyup='checks();' /><br></br>
+		<span id='messagep'></span>
+		<label class="labels" >Enter password </label><input type=text name="pass2" id="pass2" placeholder="required" autocomplete="on" onkeyup='checks();' /><br></br>
+		<label class="labels" >Enter amount </label><input type="number" step="0.01" min=0 name="amount" placeholder="required" autocomplete="on"/><br></br>
+		<select name = "type" required>
+			<option value="" disabled selected>Choose One</option>
+			<option value = 'D'>deposit</option>
+			<option value = 'W'>withdraw</option>
+		</select><br></br>
+		<input type = "checkbox" id="receipt" name="receipt" value="yes"/> email receipt<br></br>
+		<input type=submit>
+	</div>
+</form>
+<script>
+function fio(){
+	var ptr = document.getElementById("UCID2");
+	var ucid = ptr.value.trim();
+	var pass = document.getElementById("pass2").value;
+	if(ucid==""){
+		return false;
+	}else if(pass==""){
+		return false;
+	}else{return true;}
+}
+var checks = function() {
+	var ptr = document.getElementById("UCID2");
+	var ucid = ptr.value.trim();
+	var ptr = document.getElementById("pass2").value;
+  if (ucid == ""){
+    document.getElementById('messagel').style.color = 'red';
+    document.getElementById('messagel').innerHTML = 'empty';
+  }else{
+	document.getElementById('messagel').style.color = 'green';
+    document.getElementById('messagel').innerHTML = ' valid';
+  }
+  if (ptr == "") {
+    document.getElementById('messagep').style.color = 'red';
+    document.getElementById('messagep').innerHTML = 'empty';
+  }else{
+	document.getElementById('messagep').style.color = 'green';
+    document.getElementById('messagep').innerHTML = ' valid';
+  }
+}
+</script>
+
+<form action="display.php">
+	<div class="center-div">
+		<label class="labels" >Enter UCID </label><input type = text name="UCID" id = "userf3" placeholder="required" placeholder="required" autocomplete="on"/><br><br>
+		<label class="labels" >Enter Password </label><input type = text name="pass" id = "passf3" placeholder="required" placeholder="required" autocomplete="on"/><br><br>
+		<label class="labels" >Enter Number </label><input type = "number" name="number" id = "numberf3" placeholder="required" value="1" autocomplete="on"/><br><br>
+		<input type = "checkbox" id="receipt" name="receipt" value="email"> email receipt<br><br>
+		<input type=submit value="Display">
+	</div>
+</form>
+
