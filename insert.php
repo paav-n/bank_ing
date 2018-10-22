@@ -11,9 +11,7 @@ if (mysqli_connect_errno())
      echo "Failed to connect to MySQL: " . mysqli_connect_error();
      exit();
   }
-
 mysqli_select_db( $db, $project );
-
 
 $flag = false;
 $UCID = GET("UCID",  $flag);
@@ -23,12 +21,17 @@ $mail = GET("mail", $flag);
 $initial = GET ("initial", $flag);
 if($flag){exit("<br>Failed: empty input field");}
 
-if (($sendMail = GET("receipt",$flag) == "yes"){}
+insert($UCID, $pass, $name, $mail, $initial, $output, $db);
 
-insert($UCID, $pass, $name, $mail, $initial, $db);
+$headers = "";
 
-print "<br>bye" ;
-//mysqli_free_result($t);
+if (GET("receipt",$flag) == "email"){
+	mailer("psn24@njit.edu", "New Account", $output, $headers);
+}   
+
+echo $output;
+echo "Sucessfully created account for $UCID";
+
 mysqli_close($db);
 exit ( "<br>Interaction completed.<br><br>"  ) ;
 

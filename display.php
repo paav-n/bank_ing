@@ -13,9 +13,9 @@ mysqli_select_db( $db, $project );
 include ( "myfunctions.php" ) ;
 
 $flag = false;
-$UCID = GET("UCID",$flag);
+$ucid = GET("UCID",$flag);
 $pass = GET("pass",$flag);
-$amount = GET("amount",$flag);
+$num = GET("number",$flag);
 
 if($flag){exit("<br>Failed: empty input field");}
 
@@ -23,11 +23,17 @@ if (auth($ucid, $pass, $db ) == false) {
 	exit("Bad Credentials Probabaly");
    }; 
 
-if (($sendMail = GET("receipt",$flag) == "yes"){}   
+display ($ucid, $db, $num, $output) ;
+ 
+$headers = "";
+  
+if (GET("receipt",$flag) == "email"){
+	mailer("psn24@njit.edu", "Display Transactions", $output, $headers);
+}   
 
-display ($ucid, $db, $amount, $output) ;
+echo $output;
+echo "Sucess!!";
 
-print "<br>bye" ;
 mysqli_free_result($t);
 mysqli_close($db);
 exit ( "<br>Interaction completed.<br><br>"  ) ;

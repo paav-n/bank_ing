@@ -17,33 +17,36 @@ $UCID = GET("UCID2",$flag);
 $pass = GET("pass2",$flag);
 $amount = GET("amount",$flag);
 $type = GET("type",$flag);
+
 if($flag){exit("<br>Failed: empty input field");}
 
 if (auth($UCID, $pass, $db) == false)
-{ 
-	exit("Bad Credentials Probabaly");
-}; 
+{ exit("Bad Credentials Probabaly");}; 
 
-if (($sendMail = GET("receipt",$flag) == "yes"){}
-
-$s="select mail from AA where UCID='$UCID'";
-$t = mysqli_query( $db,  $s );
-$row=mysqli_fetch_row($t);
-$theEmail = $row[0];
+if (GET("receipt",$flag) == "email"){
+	$mail = 'Y';
+}else{$mail = 'N';}
 
 if($type == 'D'){
 	echo "depositing";
-	deposit ($UCID, $type, $theEmail, $amount, $output, $db);
+	deposit ($UCID, $type, $mail, $amount, $output, $db);
 }
 if($type == 'W'){
 	echo "requesting a withdraw";
-	if(enough($UCID, $amount, $db, $output, $theEmail)){
-		withdraw($UCID, $amount, $db);
+	if(enough($UCID, $amount, $db)){
+		withdraw($UCID, $amount, $db, $output, $mail);
 	}
-	else print("not enough");
+	else {$output =("not enough");}
 }
 
-print "<br>bye" ;
+$headers = "";
+
+if (GET("receipt",$flag) == "email"){
+	mailer("psn24@njit.edu", "Withdraw or Deposit", $output, $headers);
+}   
+
+echo $output;
+
 mysqli_free_result($t);
 mysqli_close($db);
 exit ( "<br>Interaction completed.<br><br>"  ) ;
